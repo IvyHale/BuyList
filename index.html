@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head lang="uk">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <meta charset="UTF-8">
     <title>Buy List</title>
 
@@ -9,49 +10,51 @@
 </head>
 <body>
 <div class="bl-background">
+   <div class="container">
     <div class="bl-list">
+     <div class="bl-input">
       <form class="addform">
            <input class="addinpt" type="text" placeholder="Назва товару">
-           <input class="addbtn" type="submit" value="Додати">
+           <input class="addbtn" data-tooltip="tooltip" type="submit" value="Додати">
         </form>
-        <div class="bl-row">
-            <div class="bl-product" index="not-bought">
+        </div>
+            <div class="bl-product" >
                 <div class="productname">Помідори</div>
                 <div class="bl-count">
-                   <button class="bl-minus">–</button>
+                   <button data-tooltip="tooltip" class="bl-minus">–</button>
                     <span class="bl-label">2</span>
-                    <button class="bl-plus">+</button>
+                    <button data-tooltip="tooltip" class="bl-plus">+</button>
                 </div>
                 <div class="bl-buttons">
-                   <button class="boughtbtn">Куплено</button>
-                   <button class="delbtn">x</button>
+                   <button data-tooltip="tooltip" class="boughtbtn">Куплено</button>
+                   <button data-tooltip="tooltip" class="delbtn">x</button>
                 </div>
             </div>
-            <div class="bl-product" index="bought">
+            <div class="bl-product">
                 <div class="productname">Печиво</div>
                 <div class="bl-count">
-                   <button class="bl-minus">–</button>
+                   <button data-tooltip="tooltip" class="bl-minus">–</button>
                     <span class="bl-label">2</span>
-                    <button class="bl-plus">+</button>
+                    <button data-tooltip="tooltip" class="bl-plus">+</button>
                 </div>
                 <div class="bl-buttons">
-                   <button class="boughtbtn">Куплено</button>
-                   <button class="delbtn">x</button>
+                   <button data-tooltip="tooltip" class="boughtbtn">Куплено</button>
+                   <button data-tooltip="tooltip" class="delbtn">x</button>
                 </div>
             </div>
-            <div class="bl-product" index="bought">
+            <div class="bl-product">
                 <div class="productname">Хліб</div>
                 <div class="bl-count">
-                   <button class="bl-minus">–</button>
+                   <button data-tooltip="tooltip" class="bl-minus">–</button>
                     <span class="bl-label">1</span>
-                    <button class="bl-plus">+</button>
+                    <button data-tooltip="tooltip" class="bl-plus">+</button>
                 </div>
                 <div class="bl-buttons">
-                   <button class="boughtbtn">Куплено</button>
-                   <button class="delbtn">x</button>
+                   <button data-tooltip="tooltip" class="boughtbtn">Куплено</button>
+                   <button data-tooltip="tooltip" class="delbtn">x</button>
                 </div>
             </div>
-        </div>
+        
     </div>
     <div class="bl-bought">
         <div class="bl-title">Залишилося</div>
@@ -76,7 +79,99 @@
             
         </div>
     </div>
+    </div>
 </div>
+<div class="badge">
+    Buy List
+</div>
+
+
+
+
+
+ <script>
+
+     
+     var showingTooltip;
+
+    document.onmouseover = function(e) {
+      var target = e.target;
+
+      var tooltip = target.getAttribute('data-tooltip');
+      if (!tooltip) return;
+
+      var tooltipElem = document.createElement('div');
+      tooltipElem.className = 'tooltip';
+      tooltipElem.innerHTML = tooltip;
+      document.body.appendChild(tooltipElem);
+        
+
+      var coords = target.getBoundingClientRect();
+
+      var left = coords.left + (target.offsetWidth - tooltipElem.offsetWidth) / 2;
+      if (left < 0) left = 0; 
+
+      var top = coords.top - tooltipElem.offsetHeight - 5;
+      if (top < 0) { 
+        top = coords.top + target.offsetHeight + 5;
+      }
+
+      tooltipElem.style.left = left + 'px';
+      tooltipElem.style.top = top + 'px';
+
+        $(".tooltip").slideUp();
+    
+      showingTooltip = tooltipElem;
+    };
+
+    document.onmouseout = function(e) {
+
+      if (showingTooltip) {
+           $(".tooltip").fadeOut();
+        document.body.removeChild(showingTooltip);
+        showingTooltip = null;
+      }
+
+    };
+     
+     function	updateNode(node,	fn)	{
+         node.fadeOut(250,	function(){
+             fn();
+             node.fadeIn(250);
+         });
+     }
+     
+//     $("window").resize(function(){
+//  var width = window.innerWidth;
+////         alert(width);
+//        
+//        
+//        if(width < 500){
+//            $(".bl-list").css("width", "100%");
+//            $(".bl-bought").css("width", "100%");
+//        }
+//         else{
+//             $(".bl-list").css("width", "67%");
+//            $(".bl-bought").css("width", "27%");
+//         }
+//});
+     
+     window.onresize = function(){
+        var width = window.innerWidth;
+//         alert(width);
+        
+        
+        if(width < 500){
+            $(".bl-list").css("width", "100%");
+            $(".bl-bought").css("width", "100%");
+        }
+         else{
+             $(".bl-list").css("width", "65%");
+            $(".bl-bought").css("width", "27%");
+         }
+     }
+
+    </script>
 
 </body>
 </html>

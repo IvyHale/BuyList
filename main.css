@@ -1,54 +1,87 @@
 body{
     background: #dadada;
+    margin: 0;
+    overflow-x: hidden;
+    min-width: 320px;
 }
 
 .bl-background {
     background: #dadada;
-    padding: 100px;
+    padding-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
     overflow: hidden;
+    width: 1127px;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    padding: 0;
+    margin: -1rem;
 }
 
 /* Ліва колонка */
 
+
+
 .bl-list {
-    font-family: Sans-serif;
-    background: white;
-    margin-bottom: 10px;
+    margin: 1rem;
+    padding: 5px;
+    position:relative;
+    display: inline-block;
     float:left; 
-    width: 67%;
+    width: 65%;
+    
     border-radius: 4px;
     border: 1px solid #dadada;
     box-shadow: 2px 2px 10px gray;
+    font-family: Sans-serif;
+    background: white;
+}
+
+.bl-input{
+    display: block;
+    padding: 12px;
+    position: relative;
+    box-sizing: inherit;
+    
+    
 }
 
 .addform{
-    padding: 15px;
-    padding-bottom: 0px;
-    margin-bottom: 20px;
+    display: flex;
+    position: relative;
+    
 }
 
 .addinpt{
     display: inline-block;
-    width: 80%;
     border: 1px solid #dadada;
     padding: 10px;
     font-size: 12px;
     border-radius: 3px;
+    box-sizing: inherit;
+        max-width: 100%;
+    flex: 1 0 auto;
+    box-sizing: inherit;
+    width: 0;
 }
 
 .addbtn{
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    box-sizing:inherit;
+    padding: 10px 25px 10px;
     background-color:dodgerblue;
     color: white;
-    height: 37px;
-    width: 17%;
-    text-align: center;
     font-size: 14px;
     border: 3px outset dodgerblue;
     border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
-    margin-left: -7px;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .bl-product{
@@ -90,9 +123,13 @@ body{
 /*Права колонка*/
 
 .bl-bought {
+    margin: 1rem;
+    padding: 5px;
     background: white;
+    position:relative;
+    display: inline-block;
     float:right;
-    width: 30%;
+    width: 27%;
     font-family: Sans-serif;
     background: white;
     margin-bottom: 10px;
@@ -196,4 +233,40 @@ body{
     height: 35px;
     width:35px;
     padding-bottom: 5px;
+}
+
+
+
+
+
+
+
+
+.tooltip {
+      position: fixed;
+      padding: 10px 20px;
+      font-family: Sans-serif;
+    font-size: 12px;
+      border-radius: 6px;
+      text-align: center;
+      color: white;
+      background-color: blueviolet;
+    }
+
+
+
+.badge{
+    display: block;
+    padding: 10px;
+    margin-top: 20px;
+    text-align: center;
+    position: relative;
+    left: 20px;
+    width: 100px;
+    background-color: blueviolet;
+    color:white;
+    font-family: Sans-serif;
+    font-weight: 700;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
