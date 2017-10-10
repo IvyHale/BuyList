@@ -1,3 +1,5 @@
+
+
 body{
     background: #dadada;
     margin: 0;
@@ -91,13 +93,14 @@ body{
     font-weight: 700;
 }
 
-.bl-product{
+.bl-product, .bl-product-bought{
     border-top: 1px solid #dadada;
     width:auto;
     display: block;
     position: relative;
     padding: 1em;
 }
+
 
 .bl-product-container{
     display: flex;
@@ -205,6 +208,10 @@ body{
 
 
 /*Кнопки*/
+button{
+    cursor: pointer;
+}
+
 .bl-label {
     background:#E8E8E8;
     border-radius: 2px;
@@ -240,7 +247,12 @@ body{
     box-sizing: border-box;
 }
 
-.boughtbtn{
+.bl-minus:disabled{
+    background-color: indianred;
+    border-color: indianred;
+}
+
+.boughtbtn, .notboughtbtn{
     display: inline-block;
     font-size: 12px;
     border: 3px outset;
@@ -288,6 +300,7 @@ body{
 .tooltip.loaded{
     opacity: 1;
     margin-top: 0px;
+    transition: all 1s ease;
 }
 
 
