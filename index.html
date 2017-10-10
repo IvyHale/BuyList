@@ -107,20 +107,22 @@
     <script>
         var showingTooltip;
         var node = $(".bl-product").first().clone();
-        var leftProd=$(".b-left-prod").first().clone();
-        
-        function ready(){
+        var leftProd = $(".b-left-prod").first().clone();
+
+        function ready() {
             addDel();
             addBought();
             minusDisable();
-            
+            $(".productname > span").on("click", function() {
+                changeName($(this));
+            });
         }
 
         window.onload = function() {
             ready();
         }
-        
-        function minusDisable(){
+
+        function minusDisable() {
             var prods = $(".bl-product");
             prods.each(function(i, elem) {
                 $(elem).find(".bl-minus").prop('disabled', true);
@@ -132,29 +134,29 @@
                 });
             });
         }
-        
-        function decCount(elem){
-            var count=$(elem).find(".bl-label").text();
-            count=count-1;
-            if (count==1){
+
+        function decCount(elem) {
+            var count = $(elem).find(".bl-label").text();
+            count = count - 1;
+            if (count == 1) {
                 $(elem).find(".bl-minus").prop('disabled', true);
             }
             var index = $(".bl-product").index(elem);
-//                alert(index);
-                $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
+            //                alert(index);
+            $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
             $(elem).find(".bl-label").text(count)
-            
+
         }
-        
-        function incCount(elem){
-            var count=$(elem).find(".bl-label").text();
+
+        function incCount(elem) {
+            var count = $(elem).find(".bl-label").text();
             count++;
-            if (count>1){
+            if (count > 1) {
                 $(elem).find(".bl-minus").prop('disabled', false);
             }
             var index = $(".bl-product").index(elem);
-//                alert(index);
-                $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
+            //                alert(index);
+            $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
             $(elem).find(".bl-label").text(count);
         }
 
@@ -162,7 +164,11 @@
             var prods = $(".bl-product");
             prods.each(function(i, elem) {
                 $(elem).find(".delbtn").click(function() {
+                    var index = $(".bl-product").index($(elem));
+                    //                alert(index);
+                    $(".b-left-container").find(".b-left-prod").eq(index).remove();
                     $(elem).remove();
+                    delTooltip();
                 });
             });
         }
@@ -239,42 +245,44 @@
         };
 
         document.onmouseout = function(e) {
+            delTooltip();
+            
+        };
 
+        function delTooltip(){
             if (showingTooltip) {
                 showingTooltip.style.opacity = 0;
-                showingTooltip.className='tooltip';
+                showingTooltip.className = 'tooltip';
                 document.body.removeChild(showingTooltip);
                 showingTooltip = null;
             }
-        };
-
-
+        }
 
         function addProduct() {
-            var span=$("<span></span>").text(document.getElementsByClassName("addinpt")[0].value);
+            var span = $("<span></span>").text(document.getElementsByClassName("addinpt")[0].value);
             node.find(".productname").text("");
             node.find(".productname").append(span);
             document.getElementsByClassName("addinpt")[0].value = "";
             node.find(".bl-label").text("1");
             node.appendTo(".bl-list-container");
-            
+
             leftProd.find(".left-label").text(node.find(".productname").text());
             leftProd.find(".count-label").text("1");
             leftProd.appendTo(".b-left-container");
-            
-            leftProd=$(".b-left-prod").first().clone();
-            
+
+            leftProd = $(".b-left-prod").first().clone();
+
             node = $(".bl-product").first().clone();
-            
-            $(".productname > span").on("click", function() {
-            changeName($(this));
-        });
-            
+
+            //            $(".productname > span").on("click", function() {
+            //                changeName($(this));
+            //            });
+
             document.getElementsByClassName("addinpt")[0].focus();
-            
+
             ready();
-        
-            
+
+
         }
 
 
@@ -292,8 +300,8 @@
                 $(".bl-background").css("width", "85%");
             }
         }).resize();
-        
-        function changeName(elem){
+
+        function changeName(elem) {
             var name = $(elem).text();
             var curNode = $(elem);
             $(elem).text("");
@@ -301,19 +309,15 @@
             $(elem).find(".editname").val(name);
             $(elem).find(".editname").focus();
             $(elem).find(".editname").on("focusout", function() {
-//                alert($(this).parent().parent().parent().html());
+                //                alert($(this).parent().parent().parent().html());
                 var index = $(".bl-product").index($(this).parent().parent().parent().parent());
-//                alert(index);
+                //                alert(index);
                 name = $(this).val();
                 $(".b-left-container").find(".b-left-prod").eq(index).find(".left-label").text(name);
                 curNode.text(name);
                 $(this).remove();
             });
         }
-
-        $(".productname > span").on("click", function() {
-            changeName($(this));
-        });
 
     </script>
 
