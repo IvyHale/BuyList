@@ -1,5 +1,3 @@
-
-
 body{
     background: #dadada;
     margin: 0;
@@ -10,7 +8,7 @@ body{
     font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;
 }
 
-.bl-background {
+.background {
     background: #dadada;
     padding-top: 100px;
     margin-left: auto;
@@ -32,8 +30,6 @@ body{
 
 /* Ліва колонка */
 
-
-
 .bl-list {
     padding: 1rem;
     position:relative;
@@ -51,7 +47,7 @@ body{
     flex-direction: column;
 }
 
-.bl-input{
+.input{
     display: block;
     padding: 12px;
     position: relative;
@@ -73,7 +69,7 @@ body{
     font-size: 12px;
     border-radius: 3px;
     box-sizing: inherit;
-        max-width: 100%;
+    max-width: 100%;
     flex: 1 0 auto;
     box-sizing: inherit;
     width: 0;
@@ -93,7 +89,7 @@ body{
     font-weight: 700;
 }
 
-.bl-product, .bl-product-bought{
+.product, .product-bought{
     border-top: 1px solid #dadada;
     width:auto;
     display: block;
@@ -102,7 +98,7 @@ body{
 }
 
 
-.bl-product-container{
+.product-container{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -110,7 +106,7 @@ body{
     margin: -1rem;
 }
 
-.productname{
+.product-name{
     position: relative;
     display: inline-block;
     padding: 1rem;
@@ -119,7 +115,7 @@ body{
     box-sizing: border-box;
 }
 
-.bl-count{
+.count{
     position: relative;
     display: inline-block;
     padding: .5rem;
@@ -131,7 +127,7 @@ body{
 }
 
 
-.bl-buttons{
+.buttons{
     position: relative;
     display: inline-block;
     padding: .5rem;
@@ -170,20 +166,20 @@ body{
     padding: 15px;
 }
 
-.b-left{
+.stats-left{
     border-top: 1px solid #dadada;
     border-bottom: 1px solid #dadada;
     width:auto;
     padding: 20px;
 }
 
-.b-bought{
+.stats-bought{
     border-top: 1px solid #dadada;
     width:auto;
-    padding: 15px;
+    padding: 20px;
 }
 
-.b-left-prod{
+.stat-product-left, .stat-product-bought{
     background-color:#dadada;
     margin-right:5px;
     margin-bottom: 5px;
@@ -223,7 +219,7 @@ button{
     display: inline-block;
     box-sizing: border-box;
 }
-.bl-plus {
+.plus {
     background: #04a613;
     border-radius: 20px;
     border-color: #04a613;
@@ -234,7 +230,7 @@ button{
     box-sizing: border-box;
     
 }
-.bl-minus{
+.minus{
      background: crimson;
     border-radius: 20px;
     border-color: crimson;
@@ -247,7 +243,7 @@ button{
     box-sizing: border-box;
 }
 
-.bl-minus:disabled{
+.minus:disabled{
     background-color: indianred;
     border-color: indianred;
 }

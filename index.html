@@ -11,53 +11,53 @@
 </head>
 
 <body>
-    <div class="bl-background">
+    <div class="background">
         <div class="container">
             <div class="bl-list">
                 <div class="bl-list-container">
-                    <div class="bl-input">
+                    <div class="input">
                         <div class="addform">
                             <input class="addinpt" type="text" placeholder="Назва товару">
-                            <button class="addbtn" data-tooltip="tooltip1" onclick="addProduct()">Додати</button>
+                            <button class="addbtn" data-tooltip="tooltip1">Додати</button>
                         </div>
                     </div>
-                    <div class="bl-product">
-                        <div class="bl-product-container">
-                            <div class="productname"><span>Помідори</span></div>
-                            <div class="bl-count">
-                                <button data-tooltip="tooltip2" class="bl-minus">–</button>
+                    <div class="product">
+                        <div class="product-container">
+                            <div class="product-name"><span class="editable">Помідори</span></div>
+                            <div class="count">
+                                <button data-tooltip="tooltip2" class="minus">–</button>
                                 <span class="bl-label">1</span>
-                                <button data-tooltip="tooltip3" class="bl-plus">+</button>
+                                <button data-tooltip="tooltip3" class="plus">+</button>
                             </div>
-                            <div class="bl-buttons">
+                            <div class="buttons">
                                 <button data-tooltip="tooltip4" class="boughtbtn">Куплено</button>
                                 <button data-tooltip="tooltip5" class="delbtn">x</button>
                             </div>
                         </div>
                     </div>
-                    <div class="bl-product">
-                        <div class="bl-product-container">
-                            <div class="productname"><span>Печиво</span></div>
-                            <div class="bl-count">
-                                <button data-tooltip="tooltip6" class="bl-minus">–</button>
+                    <div class="product">
+                        <div class="product-container">
+                            <div class="product-name"><span class="editable">Печиво</span></div>
+                            <div class="count">
+                                <button data-tooltip="tooltip6" class="minus">–</button>
                                 <span class="bl-label">1</span>
-                                <button data-tooltip="tooltip7" class="bl-plus">+</button>
+                                <button data-tooltip="tooltip7" class="plus">+</button>
                             </div>
-                            <div class="bl-buttons">
+                            <div class="buttons">
                                 <button data-tooltip="tooltip8" class="boughtbtn">Куплено</button>
                                 <button data-tooltip="tooltip9" class="delbtn">x</button>
                             </div>
                         </div>
                     </div>
-                    <div class="bl-product">
-                        <div class="bl-product-container">
-                            <div class="productname"><span>Сир</span></div>
-                            <div class="bl-count">
-                                <button data-tooltip="tooltip10" class="bl-minus">–</button>
+                    <div class="product">
+                        <div class="product-container">
+                            <div class="product-name"><span class="editable">Сир</span></div>
+                            <div class="count">
+                                <button data-tooltip="tooltip10" class="minus">–</button>
                                 <span class="bl-label">1</span>
-                                <button data-tooltip="tooltip11" class="bl-plus">+</button>
+                                <button data-tooltip="tooltip11" class="plus">+</button>
                             </div>
-                            <div class="bl-buttons">
+                            <div class="buttons">
                                 <button data-tooltip="tooltip12" class="boughtbtn">Куплено</button>
                                 <button data-tooltip="tooltip13" class="delbtn">x</button>
                             </div>
@@ -68,25 +68,26 @@
             <div class="bl-bought">
                 <div class="bl-bought-container">
                     <div class="bl-title">Залишилося</div>
-                    <div class="b-left">
-                        <div class="b-left-container">
-                            <span class="b-left-prod">
+                    <div class="stats-left">
+                        <div class="stats-left-container">
+                            <span class="stat-product-left">
                     <span class="left-label">Помідори</span>
                             <span class="count-label">1</span>
                             </span>
-                            <span class="b-left-prod">
+                            <span class="stat-product-left">
                     <span class="left-label">Печиво</span>
                             <span class="count-label">1</span>
                             </span>
-                            <span class="b-left-prod">
-                    <span class="left-label">Хліб</span>
+                            <span class="stat-product-left">
+                    <span class="left-label">Сир</span>
                             <span class="count-label">1</span>
                             </span>
                         </div>
                     </div>
                     <div class="bl-title">Куплено</div>
-                    <div class="b-bought">
-
+                    <div class="stats-bought">
+                        <div class="stats-bought-container">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -105,115 +106,156 @@
 
 
     <script>
-        var showingTooltip;
-        var node = $(".bl-product").first().clone();
-        var leftProd = $(".b-left-prod").first().clone();
+        var template = $('.product').get(0).outerHTML;
+        var container = $(".bl-list-container:first");
+        var statTemplate=$('.stat-product-left').get(0).outerHTML;
+        var leftContainer = $('.stats-left-container:first');
+        var boughtContainer = $('.stats-bought-container:first');
+        
+        $(".minus").click(decCount);
+        $('.plus').click(incCount);
+        $(".addbtn").click(addProduct);
+        $(".delbtn").click(delProduct);
+        $(".boughtbtn").click(changeToBought);
+        $(".editable").click(changeName);
+        $(".minus").prop('disabled', true);
+        
 
-        function ready() {
-            addDel();
-            addBought();
-            minusDisable();
-            $(".productname > span").on("click", function() {
-                changeName($(this));
-            });
+        function addProduct() {
+            
+            var name = $(".addinpt").val();
+            var node = $(template);
+            node.find(".product-name").find('span').text(name);
+            node.find(".delbtn").click(delProduct);
+            node.find('.boughtbtn').click(changeToBought);
+            node.find(".minus").click(decCount);
+            node.find(".plus").click(incCount);
+            node.find(".product-name").find('span').click(changeName);
+            node.find('.minus').prop('disabled',true);
+            
+            container.append(node);
+            
+            $('input').val("");
+            
+            var statlabel = $(statTemplate);
+            statlabel.find('.left-label').text(name);
+            statlabel.find('.count-label').text("1");
+            leftContainer.append(statlabel);
+
+            document.getElementsByClassName("addinpt")[0].focus();
         }
-
-        window.onload = function() {
-            ready();
+        
+        
+        function delProduct() {
+            var row = $(this).parent().parent().parent();
+            var index = $(".product").index(row);
+            leftContainer.find('.stat-product-left').eq(index).remove();
+            row.fadeOut(350);
+            row.remove();
+            delTooltip();
         }
+        
 
-        function minusDisable() {
-            var prods = $(".bl-product");
-            prods.each(function(i, elem) {
-                $(elem).find(".bl-minus").prop('disabled', true);
-                $(elem).find(".bl-minus").click(function() {
-                    decCount($(elem));
-                });
-                $(elem).find(".bl-plus").click(function() {
-                    incCount($(elem));
-                });
-            });
-        }
-
-        function decCount(elem) {
+        function decCount() {
+            var elem=$(this).parent().parent().parent();
             var count = $(elem).find(".bl-label").text();
             count = count - 1;
             if (count == 1) {
-                $(elem).find(".bl-minus").prop('disabled', true);
+                $(elem).find(".minus").prop('disabled', true);
             }
-            var index = $(".bl-product").index(elem);
-            //                alert(index);
-            $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
+            var index = $(".product").index(elem);
+            leftContainer.find(".stat-product-left").eq(index).find(".count-label").text(count);
             $(elem).find(".bl-label").text(count)
 
         }
 
-        function incCount(elem) {
+        function incCount() {
+            var elem=$(this).parent().parent().parent();
             var count = $(elem).find(".bl-label").text();
             count++;
             if (count > 1) {
-                $(elem).find(".bl-minus").prop('disabled', false);
+                $(elem).find(".minus").prop('disabled', false);
             }
-            var index = $(".bl-product").index(elem);
-            //                alert(index);
-            $(".b-left-container").find(".b-left-prod").eq(index).find(".count-label").text(count);
-            $(elem).find(".bl-label").text(count);
+            var index = $(".product").index(elem);
+            $(".stats-left-container").find(".stat-product-left").eq(index).find(".count-label").text(count);
+            $(elem).find(".bl-label").text(count)
         }
-
-        function addDel() {
-            var prods = $(".bl-product");
-            prods.each(function(i, elem) {
-                $(elem).find(".delbtn").click(function() {
-                    var index = $(".bl-product").index($(elem));
-                    //                alert(index);
-                    $(".b-left-container").find(".b-left-prod").eq(index).remove();
-                    $(elem).remove();
-                    delTooltip();
-                });
-            });
-        }
-
-        function addBought() {
-            var prods = $(".bl-product");
-
-            prods.each(function(i, elem) {
-                $(elem).find(".boughtbtn").click(function() {
-                    $(elem).attr('class', 'bl-product-bought');
-                    changeToBought($(elem));
-                });
-            });
-        }
-
-        function changeToBought(elem) {
+        
+        function changeToBought() {
+            var elem=$(this).parent().parent().parent();
             $(elem).find(".delbtn").css("display", "none");
-            $(elem).find(".bl-minus").css("visibility", "hidden");
-            $(elem).find(".bl-plus").css("visibility", "hidden");
-            $(elem).find(".productname").css("text-decoration", "line-through");
+            $(elem).find(".minus").css("visibility", "hidden");
+            $(elem).find(".plus").css("visibility", "hidden");
+            $(elem).find(".product-name").css("text-decoration", "line-through");
             $(elem).find(".boughtbtn").text("Не куплено");
-
             $(elem).find(".boughtbtn").attr('class', 'notboughtbtn');
-            $(elem).find(".notboughtbtn").click(function() {
-                $(elem).attr('class', 'bl-product');
-                changeToNotBought($(elem));
-            });
+            $(elem).find(".notboughtbtn").unbind("click");
+            $(elem).find(".notboughtbtn").click(changeToNotBought);
+            
+            var statlabel = $(statTemplate);
+            statlabel.find('.left-label').text($(elem).find('.product-name > span').text());
+            statlabel.find('.count-label').text($(elem).find(".bl-label").text());
+            statlabel.css("text-decoration", "line-through");
+            
+            var index=$(".product").index($(elem));
+            leftContainer.find(".stat-product-left").eq(index).remove();
+            
+            $(elem).attr('class', 'product-bought');
+            statlabel.attr('class', 'stat-product-bought');
+            
+            index=$(".product-bought").index($(elem));
+            if (index==0) boughtContainer.prepend(statlabel);
+            else $(".stat-product-bought").eq(index-1).after(statlabel);
 
         }
 
-        function changeToNotBought(elem) {
+        function changeToNotBought() {
+            var elem=$(this).parent().parent().parent();
             $(elem).find(".delbtn").css("display", "inline-block");
-            $(elem).find(".bl-minus").css("visibility", "visible");
-            $(elem).find(".bl-plus").css("visibility", "visible");
-            $(elem).find(".productname").css("text-decoration", "none");
-            $(elem).find(".notboughtbtn").text("Куплено");
+            $(elem).find(".minus").css("visibility", "visible");
+            $(elem).find(".plus").css("visibility", "visible");
+            $(elem).find(".product-name").css("text-decoration", "none");
+            $(elem).find(".boughtbtn").text("Куплено");
             $(elem).find(".notboughtbtn").attr('class', 'boughtbtn');
-            $(elem).find(".boughtbtn").click(function() {
-                $(elem).attr('class', 'bl-product-bought');
-                changeToBought($(elem));
+            $(elem).find(".boughtbtn").unbind("click");
+            $(elem).find(".boughtbtn").click(changeToBought);
+            
+            var statlabel = $(statTemplate);
+            statlabel.find('.left-label').text($(elem).find('.product-name > span').text());
+            statlabel.find('.count-label').text($(elem).find(".bl-label").text());
+            
+            var index=$(".product-bought").index($(elem));
+            $(".stat-product-bought").eq(index).remove();
+            
+            $(elem).attr('class', 'product');
+            statlabel.attr('class', 'stat-product-left');
+            
+            index=$(".product").index($(elem));
+            
+            if (index==0) leftContainer.prepend(statlabel);
+            else $(".stat-product-left").eq(index-1).after(statlabel);
+        }
+        
+        function changeName() {
+            var elem=$(this);
+            var name = $(elem).text();
+            $(elem).text("");
+            $(elem).append("<input type='text' class='editname'></input>");
+            $(elem).find(".editname").focus();
+            $(elem).find(".editname").val(name);
+            
+            $(elem).find(".editname").on("focusout", function() {
+                var index = $(".product").index($(this).parent().parent().parent().parent());
+                name = $(this).val();
+                $(".stat-product-left").eq(index).find(".left-label").text(name);
+                $(elem).text(name);
+                $(this).remove();
             });
         }
-
-
-
+        
+        
+        
+        var showingTooltip;
         document.onmouseover = function(e) {
             var target = e.target;
 
@@ -246,9 +288,8 @@
 
         document.onmouseout = function(e) {
             delTooltip();
-            
         };
-
+        
         function delTooltip(){
             if (showingTooltip) {
                 showingTooltip.style.opacity = 0;
@@ -257,37 +298,8 @@
                 showingTooltip = null;
             }
         }
-
-        function addProduct() {
-            var span = $("<span></span>").text(document.getElementsByClassName("addinpt")[0].value);
-            node.find(".productname").text("");
-            node.find(".productname").append(span);
-            document.getElementsByClassName("addinpt")[0].value = "";
-            node.find(".bl-label").text("1");
-            node.appendTo(".bl-list-container");
-
-            leftProd.find(".left-label").text(node.find(".productname").text());
-            leftProd.find(".count-label").text("1");
-            leftProd.appendTo(".b-left-container");
-
-            leftProd = $(".b-left-prod").first().clone();
-
-            node = $(".bl-product").first().clone();
-
-            //            $(".productname > span").on("click", function() {
-            //                changeName($(this));
-            //            });
-
-            document.getElementsByClassName("addinpt")[0].focus();
-
-            ready();
-
-
-        }
-
-
-
-
+        
+        
         $(window).on("resize", function() {
             var width = window.innerWidth;
             if (width < 720) {
@@ -300,25 +312,6 @@
                 $(".bl-background").css("width", "85%");
             }
         }).resize();
-
-        function changeName(elem) {
-            var name = $(elem).text();
-            var curNode = $(elem);
-            $(elem).text("");
-            $(elem).append("<input type='text' class='editname'></input>")
-            $(elem).find(".editname").val(name);
-            $(elem).find(".editname").focus();
-            $(elem).find(".editname").on("focusout", function() {
-                //                alert($(this).parent().parent().parent().html());
-                var index = $(".bl-product").index($(this).parent().parent().parent().parent());
-                //                alert(index);
-                name = $(this).val();
-                $(".b-left-container").find(".b-left-prod").eq(index).find(".left-label").text(name);
-                curNode.text(name);
-                $(this).remove();
-            });
-        }
-
     </script>
 
 </body>
